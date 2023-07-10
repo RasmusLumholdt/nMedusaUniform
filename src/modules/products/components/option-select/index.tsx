@@ -28,7 +28,7 @@ const OptionSelect: React.FC<OptionSelectProps> = ({
               onClick={() => updateOption({ [option.id]: v })}
               key={v}
               className={clsx(
-                "border-gray-200 border text-xsmall-regular h-[50px] transition-all duration-200",
+                "border-gray-200 border text-sm-regular h-[50px] transition-all duration-200",
                 { "border-gray-900": v === current }
               )}
             >

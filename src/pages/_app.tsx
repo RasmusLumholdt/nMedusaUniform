@@ -3,6 +3,7 @@ import { AccountProvider } from "@lib/context/account-context"
 import { CartDropdownProvider } from "@lib/context/cart-dropdown-context"
 import { MobileMenuProvider } from "@lib/context/mobile-menu-context"
 import { StoreProvider } from "@lib/context/store-context"
+import RouteGuard from "@modules/authentication/RouteGuard"
 import { Hydrate } from "@tanstack/react-query"
 import { CartProvider, MedusaProvider } from "medusa-react"
 import "styles/globals.css"
@@ -21,19 +22,25 @@ function App({
         client: queryClient,
       }}
     >
+      
       <Hydrate state={pageProps.dehydratedState}>
         <CartDropdownProvider>
           <MobileMenuProvider>
             <CartProvider>
               <StoreProvider>
                 <AccountProvider>
-                  {getLayout(<Component {...pageProps} />)}
+                <RouteGuard>
+                  <>
+                    {getLayout(<Component {...pageProps} />)}
+                  </>
+                  </RouteGuard>
                 </AccountProvider>
               </StoreProvider>
             </CartProvider>
           </MobileMenuProvider>
         </CartDropdownProvider>
       </Hydrate>
+      
     </MedusaProvider>
   )
 }

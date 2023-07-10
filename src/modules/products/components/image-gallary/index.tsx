@@ -44,7 +44,8 @@ const ImageGallery = ({ images }: ImageGalleryProps) => {
           )
         })}
       </div>
-      <div className="flex flex-col flex-1 small:mx-16 gap-y-4">
+      <div className="flex flex-col flex-1 small:mx-16 gap-y-4 pdp-images">
+        
         {images.map((image, index) => {
           return (
             <div

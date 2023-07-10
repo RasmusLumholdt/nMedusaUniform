@@ -1,0 +1,10 @@
+import '@modules/home/components/hero/index';
+import '@modules/common/components/footer-cta/index';
+import '@modules/account/components/login/LoginRoot';
+import '@modules/account/components/overview/OverviewRoot';
+import '@modules/account/components/profile/ProfileRoot';
+import '@modules/account/components/address-book/addressBookRoot';
+import '@modules/account/components/order-overview/OrderOverviewRoot';
+import '@modules/store/StoreRoot';
+import '@modules/home/components/faq/FaqContainer';
+import '@modules/home/components/faq/QAndA';

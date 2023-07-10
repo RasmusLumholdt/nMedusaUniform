@@ -18,17 +18,17 @@ const Button = ({
     <button
       {...props}
       className={clsx(
-        "w-full uppercase flex items-center justify-center min-h-[50px] px-5 py-[10px] text-small-regular border transition-colors duration-200 disabled:opacity-50",
+        "w-full flex items-center justify-center min-h-[47px] tracking-[1px] text-button transition-colors duration-350 ",
         {
-          "text-white bg-gray-900 border-gray-900 hover:bg-white hover:text-gray-900 disabled:hover:bg-gray-900 disabled:hover:text-white":
+          "text-white overlay azur skew-percent py-[14px] px-[24px] disabled:bg-gray-200":
             variant === "primary",
-          "text-gray-900 bg-transparent border-gray-920 hover:bg-gray-100":
+          "text-n-blue  border-2 bg-white border-gray-200 py-[10px] px-[20px] hover:text-white hover:bg-n-lake hover:border-n-lake":
             variant === "secondary",
         },
         className
       )}
     >
-      {isLoading ? <Spinner /> : children}
+      <span>{isLoading ? <Spinner /> : children}</span>
     </button>
   )
 }

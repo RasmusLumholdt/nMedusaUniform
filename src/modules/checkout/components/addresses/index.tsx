@@ -1,4 +1,5 @@
 import { useCheckout } from "@lib/context/checkout-context"
+import { hasEnoughPoints } from "@lib/util/has-enough-points"
 import Button from "@modules/common/components/button"
 import Checkbox from "@modules/common/components/checkbox"
 import Spinner from "@modules/common/icons/spinner"
@@ -11,12 +12,12 @@ const Addresses = () => {
     editAddresses: { state: isEdit, toggle: setEdit },
     setAddresses,
     handleSubmit,
-    cart,
+    cart
   } = useCheckout()
   return (
     <div className="bg-white">
       <div className="text-xl-semi flex items-center gap-x-4 px-8 pb-6 pt-8">
-        <div className="bg-gray-900 w-8 h-8 rounded-full text-white flex justify-center items-center text-sm">
+        <div className="bg-n-blue w-8 h-8 rounded-full text-white flex justify-center items-center text-sm">
           1
         </div>
         <h2>Shipping address</h2>
@@ -24,7 +25,7 @@ const Addresses = () => {
       {isEdit ? (
         <div className="px-8 pb-8">
           <ShippingAddress />
-          <div className="mt-6">
+          {/* <div className="mt-6">
             <Checkbox
               label="Same as billing address"
               checked={checked}
@@ -34,20 +35,25 @@ const Addresses = () => {
           {!checked && (
             <div>
               <div className="text-xl-semi flex items-center gap-x-4 pb-6 pt-8">
-                <div className="bg-gray-900 w-8 h-8 rounded-full text-white flex justify-center items-center font-mono text-sm">
+                <div className="bg-n-blue w-8 h-8 rounded-full text-white flex justify-center items-center font-mono text-sm">
                   2
                 </div>
                 <h2>Billing address</h2>
               </div>
               <BillingAddress />
             </div>
-          )}
+          )} */}
           <Button
-            className="max-w-[200px] mt-6"
+            disabled={!hasEnoughPoints(cart)}
+            className="max-w-[300px] mt-6"
             onClick={handleSubmit(setAddresses)}
           >
             Continue to delivery
           </Button>
+          {!hasEnoughPoints(cart) && 
+          <div className="text-sm text-red-600">
+            <span>Not enough points to checkout</span>
+            </div>}
         </div>
       ) : (
         <div>
@@ -78,14 +84,14 @@ const Addresses = () => {
                       <span>{cart.shipping_address.phone}</span>
                       <span>{cart.email}</span>
                     </div>
-                    {checked && (
+                    {/* {checked && (
                       <div className="flex items-center gap-x-2 mt-6">
                         <div className="flex items-center justify-center border border-gray-700 bg-gray-100 w-4 h-4">
                           ✓
                         </div>
                         <span>Same as billing address</span>
                       </div>
-                    )}
+                    )} */}
                   </div>
                   <div>
                     <button onClick={setEdit}>Edit</button>
@@ -98,10 +104,10 @@ const Addresses = () => {
               </div>
             )}
           </div>
-          {!checked && (
+          {/* {!checked && (
             <div>
               <div className="text-xl-semi flex items-center gap-x-4 px-8 pb-6 pt-8">
-                <div className="bg-gray-900 w-8 h-8 rounded-full text-white flex justify-center items-center font-mono text-sm">
+                <div className="bg-n-blue w-8 h-8 rounded-full text-white flex justify-center items-center font-mono text-sm">
                   2
                 </div>
                 <h2>Billing address</h2>
@@ -146,7 +152,7 @@ const Addresses = () => {
                 )}
               </div>
             </div>
-          )}
+          )} */}
         </div>
       )}
     </div>

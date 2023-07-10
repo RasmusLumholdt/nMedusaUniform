@@ -15,7 +15,7 @@ const ProfileTemplate = () => {
   return (
     <div className="w-full">
       <div className="mb-8 flex flex-col gap-y-4">
-        <h1 className="text-2xl-semi">Profile</h1>
+        <h1 className="text-xl-semi">Profile</h1>
         <p className="text-base-regular">
           View and update your profile information, including your name, email,
           and phone number. You can also update your billing address, or change
@@ -28,10 +28,10 @@ const ProfileTemplate = () => {
         <ProfileEmail customer={customer} />
         <Divider />
         <ProfilePhone customer={customer} />
-        <Divider />
+        {/* <Divider />
         <ProfilePassword customer={customer} />
         <Divider />
-        <ProfileBillingAddress customer={customer} />
+        <ProfileBillingAddress customer={customer} /> */}
       </div>
     </div>
   )

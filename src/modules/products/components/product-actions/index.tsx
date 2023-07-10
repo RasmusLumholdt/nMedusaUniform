@@ -2,6 +2,7 @@ import { useProductActions } from "@lib/context/product-context"
 import useProductPrice from "@lib/hooks/use-product-price"
 import Button from "@modules/common/components/button"
 import OptionSelect from "@modules/products/components/option-select"
+import NativeSelect from "@modules/common/components/native-select"
 import clsx from "clsx"
 import Link from "next/link"
 import React, { useMemo } from "react"
@@ -32,7 +33,7 @@ const ProductActions: React.FC<ProductActionsProps> = ({ product }) => {
           </a>
         </Link>
       )}
-      <h3 className="text-xl-regular">{product.title}</h3>
+      <h1 className="text-xl-semi">{product.title}</h1>
 
       <p className="text-base-regular">{product.description}</p>
 
@@ -82,9 +83,30 @@ const ProductActions: React.FC<ProductActionsProps> = ({ product }) => {
         )}
       </div>
 
-      <Button onClick={addToCart}>
+      <div className="product-actions flex gap-2"> 
+      <NativeSelect
+            value={1}
+            className="h-full w-full"
+          >
+            {Array.from(
+              [
+                ...Array(10),
+              ].keys()
+            )
+              .slice(0, 10)
+              .map((i) => {
+                const value = i + 1
+                return (
+                  <option value={value} key={i}>
+                    {value}
+                  </option>
+                )
+              })}
+      </NativeSelect>
+      <Button onClick={addToCart} className="w-[80%] flex">
         {!inStock ? "Out of stock" : "Add to cart"}
       </Button>
+      </div>
     </div>
   )
 }

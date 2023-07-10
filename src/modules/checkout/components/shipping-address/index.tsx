@@ -13,7 +13,7 @@ const ShippingAddress = () => {
       {customer && (customer.shipping_addresses?.length || 0) > 0 && (
         <div className="mb-6 flex flex-col gap-y-4 bg-amber-100 p-4">
           <p className="text-small-regular">
-            {`Hi ${customer.first_name}, do you want to use one of your saved addresses?`}
+            {`Hi ${customer.first_name}, which office should we send items to?`}
           </p>
           <AddressSelect addresses={customer.shipping_addresses} />
         </div>
@@ -52,11 +52,19 @@ const ShippingAddress = () => {
               />
             </div>
             <Input
-              label="Company"
+              label="Phone"
+              {...register("shipping_address.phone")}
+              autoComplete="tel"
+              errors={errors}
+              touched={touchedFields}
+            />
+            <Input
+              label="Office"
               {...register("shipping_address.company")}
               autoComplete="organization"
               errors={errors}
               touched={touchedFields}
+              disabled
             />
             <Input
               label="Address"
@@ -66,6 +74,7 @@ const ShippingAddress = () => {
               autoComplete="address-line1"
               errors={errors}
               touched={touchedFields}
+              disabled
             />
             <Input
               label="Apartments, suite, etc."
@@ -73,6 +82,7 @@ const ShippingAddress = () => {
               autoComplete="address-line2"
               errors={errors}
               touched={touchedFields}
+              disabled
             />
             <div className="grid grid-cols-[122px_1fr] gap-x-2">
               <Input
@@ -83,6 +93,7 @@ const ShippingAddress = () => {
                 autoComplete="postal-code"
                 errors={errors}
                 touched={touchedFields}
+                disabled
               />
               <Input
                 label="City"
@@ -92,6 +103,7 @@ const ShippingAddress = () => {
                 autoComplete="address-level2"
                 errors={errors}
                 touched={touchedFields}
+                disabled
               />
             </div>
             <CountrySelect
@@ -101,6 +113,7 @@ const ShippingAddress = () => {
               autoComplete="country"
               errors={errors}
               touched={touchedFields}
+              disabled
             />
             <Input
               label="State / Province"
@@ -108,13 +121,7 @@ const ShippingAddress = () => {
               autoComplete="address-level1"
               errors={errors}
               touched={touchedFields}
-            />
-            <Input
-              label="Phone"
-              {...register("shipping_address.phone")}
-              autoComplete="tel"
-              errors={errors}
-              touched={touchedFields}
+              disabled
             />
           </div>
         )}

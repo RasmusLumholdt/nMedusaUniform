@@ -56,7 +56,7 @@ export const AccountProvider = ({ children }: AccountProviderProps) => {
       onSuccess: () => {
         remove()
         loginView[1](LOGIN_VIEW.SIGN_IN)
-        router.push("/")
+        router.push("/account/login")
       },
     })
   }

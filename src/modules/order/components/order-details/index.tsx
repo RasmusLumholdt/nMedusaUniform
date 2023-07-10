@@ -19,7 +19,7 @@ const OrderDetails = ({ order, showStatus }: OrderDetailsProps) => {
       <span className="text-gray-700 text-small-regular uppercase">
         Thank you, your order was successfully placed
       </span>
-      <h1 className="mt-2 uppercase text-2xl-semi">#{order.display_id}</h1>
+      <h1 className="mt-2 uppercase text-2xl-thin">#{order.display_id}</h1>
       <span>{order.id.split("order_")[1]}</span>
       <div className="flex items-center text-gray-700 text-small-regular gap-x-4 mt-4">
         <span>{new Date(order.created_at).toDateString()}</span>

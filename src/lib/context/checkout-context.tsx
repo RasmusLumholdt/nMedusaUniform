@@ -345,14 +345,15 @@ export const CheckoutProvider = ({ children }: CheckoutProviderProps) => {
 }
 
 export const useCheckout = () => {
-  const context = useContext(CheckoutContext)
-  const form = useFormContext<CheckoutFormValues>()
+  const context = useContext(CheckoutContext);
+  const form = useFormContext<CheckoutFormValues>();
+  let disableCheckout = false;
   if (context === null) {
     throw new Error(
       "useProductActionContext must be used within a ProductActionProvider"
     )
   }
-  return { ...context, ...form }
+  return { ...context, ...form, disableCheckout }
 }
 
 /**

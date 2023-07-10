@@ -1,4 +1,4 @@
-import ArrowRight from "@modules/common/icons/arrow-right"
+import ChevronRight from "@modules/common/icons/chevron-right"
 import Link from "next/link"
 
 type UnderlineLinkProps = {
@@ -10,12 +10,14 @@ const UnderlineLink = ({ href, children }: UnderlineLinkProps) => {
   return (
     <div className="flex items-start">
       <Link href={href}>
-        <a className="flex items-center text-large-regular border-b border-current gap-x-4 py-2 transition-all duration-300 group hover:pl-4 hover:pr-1">
-          <span>{children}</span>
-          <ArrowRight
-            size={20}
-            className="transition-all group-hover:ml-2 duration-300"
+        <a className="flex items-center text-link-button gap-x-4 py-2 transition-all duration-300 group">         
+          <div className="p-[1px] border-2 rounded-full m-l-[-2px]">
+          <ChevronRight
+            size={22}
+            className="transition-all duration-300 "
           />
+          </div>
+          <span>{children}</span>
         </a>
       </Link>
     </div>

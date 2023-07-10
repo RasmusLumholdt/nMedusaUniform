@@ -37,11 +37,11 @@ const AccountNav = () => {
                   Profile
                 </AccountNavLink>
               </li>
-              <li>
+              {/* <li>
                 <AccountNavLink href="/account/addresses" route={route}>
                   Addresses
                 </AccountNavLink>
-              </li>
+              </li> */}
               <li>
                 <AccountNavLink href="/account/orders" route={route}>
                   Orders

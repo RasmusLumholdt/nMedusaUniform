@@ -6,11 +6,17 @@ import Layout from "@modules/layout/templates"
 import ProductTemplate from "@modules/products/templates"
 import SkeletonProductPage from "@modules/skeletons/templates/skeleton-product-page"
 import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query"
+import { CANVAS_DRAFT_STATE, CANVAS_PUBLISHED_STATE } from "@uniformdev/canvas"
+import { withUniformGetStaticProps  } from "@uniformdev/canvas-next/route"
+import { UniformComponent, UniformComposition, UniformSlot } from "@uniformdev/canvas-react"
 import { GetStaticPaths, GetStaticProps } from "next"
 import { useRouter } from "next/router"
 import { ParsedUrlQuery } from "querystring"
 import { ReactElement } from "react"
 import { NextPageWithLayout, PrefetchedPageProps } from "types/global"
+import { LayoutProps } from "types/uniformTypes"
+import { getCompositionById, globalCompositionId, mergeGlobalCompositions } from "utils/canvas"
+import '@modules/UniformComponents'
 
 interface Params extends ParsedUrlQuery {
   handle: string
@@ -21,8 +27,8 @@ const fetchProduct = async (handle: string) => {
     .list({ handle })
     .then(({ products }) => products[0])
 }
-
-const ProductPage: NextPageWithLayout<PrefetchedPageProps> = ({ notFound }) => {
+//: NextPageWithLayout<PrefetchedPageProps, LayoutProps> = ({ notFound}, {data:pageComposition}) => {
+const ProductPage : NextPageWithLayout<PrefetchedPageProps, LayoutProps> = ({ notFound, data:composition}) => {
   const { query, isFallback, replace } = useRouter()
   const handle = typeof query.handle === "string" ? query.handle : ""
 
@@ -54,12 +60,17 @@ const ProductPage: NextPageWithLayout<PrefetchedPageProps> = ({ notFound }) => {
   if (isSuccess) {
     return (
       <>
+     
         <Head
           description={data.description}
           title={data.title}
           image={data.thumbnail}
         />
-        <ProductTemplate product={data} />
+         <UniformComposition data={composition}>
+          <ProductTemplate product={data} />
+          
+            <UniformSlot name="footer" />
+          </UniformComposition>
       </>
     )
   }
@@ -79,30 +90,37 @@ export const getStaticPaths: GetStaticPaths<Params> = async () => {
   }
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
-  const handle = context.params?.handle as string
-  const queryClient = new QueryClient()
+export const getStaticProps = withUniformGetStaticProps({
+  requestOptions: {
+    state: process.env.NODE_ENV === 'development' ? CANVAS_DRAFT_STATE : CANVAS_PUBLISHED_STATE,
+  },
+  param: 'slug',
+  handleComposition: async (routeResponse, _context) => {
+    const { composition } = routeResponse.compositionApiResponse || {};
+    // const breadcrumbs = await getBreadcrumbs(composition._id, Boolean(_context.preview));
+    // fetching global composition for header navigation and footer
+    const globalComposition = await getCompositionById(globalCompositionId, _context as { preview: boolean });
+    // merging two compositions
+    const pageComposition = mergeGlobalCompositions(composition, globalComposition);
+    
+      const handle = _context.params?.handle as string
+      const queryClient = new QueryClient()
 
-  await queryClient.prefetchQuery([`get_product`, handle], () =>
-    fetchProduct(handle)
-  )
+      await queryClient.prefetchQuery([`get_product`, handle], () =>
+        fetchProduct(handle)
+      )
 
   const queryData = await queryClient.getQueryData([`get_product`, handle])
-
-  if (!queryData) {
     return {
       props: {
-        notFound: true,
+        preview: Boolean(_context.preview),
+        data: pageComposition || null,
+        context: {
+          
+        },
+        dehydratedState: dehydrate(queryClient),
       },
-    }
-  }
-
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-      notFound: false,
-    },
-  }
-}
-
+    };
+  },
+});
 export default ProductPage

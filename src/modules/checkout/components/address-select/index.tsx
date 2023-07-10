@@ -62,7 +62,7 @@ const AddressSelect = ({ addresses }: AddressSelectProps) => {
               <span className="block truncate">
                 {selectedAddress
                   ? selectedAddress.address_1
-                  : "Choose an address"}
+                  : "Choose an office"}
               </span>
               <ChevronDown
                 size={16}

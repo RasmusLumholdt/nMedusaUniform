@@ -115,7 +115,7 @@ const AccountInfo = ({
             <div className="flex items-center justify-end mt-2">
               <Button
                 isLoading={isLoading}
-                className="w-full small:max-w-[140px]"
+                className="w-full small:max-w-[180px]"
                 type="submit"
               >
                 Save changes

@@ -4,6 +4,10 @@ import { useRouter } from "next/router"
 import { useEffect } from "react"
 import Login from "../components/login"
 
+export interface LoginTemplateProps {
+  title: string
+}
+
 const LoginTemplate = () => {
   const { loginView, customer, retrievingCustomer } = useAccount()
   const [currentView, _] = loginView
@@ -18,7 +22,7 @@ const LoginTemplate = () => {
 
   return (
     <div className="w-full flex justify-center py-24">
-      {currentView === "sign-in" ? <Login /> : <Register />}
+      {/* {currentView === "sign-in" ? <Login /> : <Register />} */}
     </div>
   )
 }

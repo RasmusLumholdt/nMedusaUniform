@@ -2,6 +2,60 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "GT-Eesti-Thin";
+  src: url("../../public/fonts/GTEestiProDisplay-Thin.otf");
+  font-weight: 100;
+}
+
+@font-face {
+  font-family: "GT-Eesti-Thin";
+  src: url("../../public/fonts/GTEestiProDisplay-UltraLight.otf");
+  font-weight: 200;
+}
+
+@font-face {
+  font-family: "GT-Eesti-Thin";
+  src: url("../../public/fonts/GTEestiProDisplay-Light.otf");
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: "GT-Eesti-Thin";
+  src: url("../../public/fonts/GTEestiProDisplay-Regular.otf");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "GT-Eesti-Thin";
+  src: url("../../public/fonts/GTEestiProDisplay-Medium.otf");
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "GT-Eesti-Thin";
+  src: url("../../public/fonts/GTEestiProDisplay-Medium.otf");
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "GT-Eesti-Thin";
+  src: url("../../public/fonts/GTEestiProDisplay-Bold.otf");
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "GT-Eesti-Thin";
+  src: url("../../public/fonts/GTEestiProDisplay-UltraBold.otf");
+  font-weight: 900;
+}
+
+@layer base {
+  body {
+    @apply text-gray-900;
+  }
+}
+
 @layer utilities {
   /* Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {
@@ -17,9 +71,13 @@
     scrollbar-width: none; /* Firefox */
   }
 
+  input {
+    line-height: 28px;
+  }
+
   input:focus ~ label,
   input:not(:placeholder-shown) ~ label {
-    @apply -translate-y-2 text-xsmall-regular; 
+    @apply -translate-y-[10px] text-[11px]; 
   }
 
   input:focus ~ label {
@@ -47,6 +105,10 @@
   input[type="search"]::-webkit-search-results-decoration {
     -webkit-appearance: none;
   }
+
+  a.image {
+    line-height: 0;
+  }
 }
 
 @layer components {
@@ -59,47 +121,59 @@
   }
 
   .text-xsmall-regular {
-    @apply text-[10px] leading-4 font-normal;
+    @apply text-sm leading-5 font-normal;
   }
 
   .text-small-regular {
-    @apply text-xs leading-5 font-normal;
-  }
-
-  .text-small-semi {
-    @apply text-xs leading-5 font-semibold;
-  }
-
-  .text-base-regular {
     @apply text-sm leading-6 font-normal;
   }
 
-  .text-base-semi {
+  .text-small-semi {
     @apply text-sm leading-6 font-semibold;
   }
 
-  .text-large-regular {
+  .text-base-regular {
     @apply text-base leading-6 font-normal;
   }
 
-  .text-large-semi {
+  .text-base-semi {
     @apply text-base leading-6 font-semibold;
   }
 
+  .text-large-regular {
+    @apply text-lg leading-7 font-normal;   /* h2 */
+  }
+
+  .text-large-semi {
+    @apply text-lg leading-7 font-semibold;   
+  }
+
+  .text-large-light {
+    @apply text-lg leading-7 font-light;   
+  }
+
   .text-xl-regular {
-    @apply text-2xl leading-[36px] font-normal;
+    @apply text-xl leading-[36px] font-normal;
   }
 
   .text-xl-semi {
-    @apply text-2xl leading-[36px] font-semibold;
+    @apply text-xl leading-[36px] font-semibold;
+  }
+
+  .text-xl-thin {
+    @apply text-xl leading-[36px] font-thin;   /* h1 */
   }
 
   .text-2xl-regular {
-    @apply text-[30px] leading-[48px] font-normal;
+    @apply text-[75px] leading-[80px] font-normal;
   }
 
   .text-2xl-semi {
-    @apply text-[30px] leading-[48px] font-semibold;
+    @apply text-[75px] leading-[80px] font-semibold;  
+  }
+
+  .text-2xl-thin {
+    @apply text-[75px] leading-[80px] font-light;  
   }
 
   .text-3xl-regular {
@@ -108,5 +182,112 @@
 
   .text-3xl-semi {
     @apply text-[36px] leading-[48px] font-semibold;
+  }
+
+  .text-button {
+    @apply text-[18px] leading-[23px] font-medium;   
+  }
+
+  .text-link-button {
+    @apply text-[22px] leading-[33px] font-thin;   
+  }
+
+  .overlay {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .overlay * {
+      z-index: 2;
+  }
+
+  .overlay.skew:after {
+    content: '';
+    background: linear-gradient(29.5deg,transparent 50%,rgba(0,0,0,.05) 50%);
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    right: 0;
+    top: -125px;
+  }
+
+  .overlay.skew-percent {
+      overflow: hidden;
+      -webkit-transition: all .35s ease;
+      -moz-transition: all .35s ease;
+      -ms-transition: all .35s ease;
+      -o-transition: all .35s ease;
+      transition: all .35s ease;
+  }
+
+  .overlay.skew-percent:after {
+      content: '';
+      background: linear-gradient(29.5deg,transparent 50%,rgba(255,255,255,.2) 50%);
+      width: 150%;
+      height: 150%;
+      position: absolute;
+      right: 0;
+      top: 30%;
+      left: 70%;
+      transform: translate(-50%,-50%);
+      -webkit-transition: all .35s ease;
+      -moz-transition: all .35s ease;
+      -ms-transition: all .35s ease;
+      -o-transition: all .35s ease;
+      transition: all .35s ease;
+  }
+
+  .overlay.skew-percent:not(.key-feature-box):hover:after {
+    content: '';
+    background: linear-gradient(29.5deg,transparent 50%,rgba(255,255,255,.2) 50%);
+    width: 200%;
+    height: 200%;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+  }
+
+  .overlay.skew-percent:not(.key-feature-box):active:after {
+    content: '';
+    background: linear-gradient(29.5deg,transparent 50%,rgba(255,255,255,.2) 50%);
+    width: 200%;
+    height: 200%;
+    position: absolute;
+    right: 0;
+    top: 40%;
+    left: 20%;
+    transform: translate(-50%,-50%);
+  } 
+
+  .overlay:before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: .89;
+    left: 0;
+    top: 0;
+  }
+
+  .overlay.azur:before {
+    background: #00a9ce;
+  }
+
+  .overlay:disabled:before {
+    background: #D9E1E2 !important;
+  }
+
+  .pdp-images > div:nth-child(n+2) {
+    display: none;
+  }
+
+  input:disabled, input:disabled + label, select:disabled {
+    @apply opacity-50;
+  }
+
+  select:disabled + span svg {
+    display: none;
   }
 }

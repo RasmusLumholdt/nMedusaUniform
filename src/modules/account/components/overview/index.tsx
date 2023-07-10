@@ -1,17 +1,38 @@
-import { Customer, Order } from "@medusajs/medusa"
+import { Customer, Order, Region } from "@medusajs/medusa"
 import ChevronDown from "@modules/common/icons/chevron-down"
 import MapPin from "@modules/common/icons/map-pin"
 import Package from "@modules/common/icons/package"
 import User from "@modules/common/icons/user"
 import { formatAmount } from "medusa-react"
 import Link from "next/link"
+import { medusaClient } from "@lib/config"
+import { useEffect, useState } from "react"
+import { getCustomerGiftcards } from "@lib/util/get-customer-giftcards"
 
 type OverviewProps = {
   orders?: Order[]
   customer?: Omit<Customer, "password_hash">
+  giftCardTotal?: number
 }
 
 const Overview = ({ orders, customer }: OverviewProps) => {
+  const [giftCardTotal, setGiftCardTotal] = useState<number>(0)
+  const [giftCardRegion, setGiftCardRegion] = useState<Region>({} as Region)
+  const sumGiftcards = async () => {
+    const giftcards = await getCustomerGiftcards(customer)
+    
+    if(!giftcards) return
+    setGiftCardRegion(giftcards[0].region);
+    const total = giftcards.reduce((acc, curr) => {
+      return acc + curr.balance
+    }, 0)
+    setGiftCardTotal(total);
+  }
+ 
+  useEffect(() => {
+    sumGiftcards();
+  }, [customer?.metadata?.giftcards])
+
   return (
     <div>
       <div className="small:hidden">
@@ -67,7 +88,7 @@ const Overview = ({ orders, customer }: OverviewProps) => {
         </div>
         <div className="flex flex-col py-8 border-t border-gray-200">
           <div className="flex flex-col gap-y-4 h-full col-span-1 row-span-2 flex-1">
-            <div className="flex items-start gap-x-16 mb-6">
+            {/* <div className="flex items-start gap-x-16 mb-6">
               <div className="flex flex-col gap-y-4">
                 <h3 className="text-large-semi">Profile</h3>
                 <div className="flex items-end gap-x-2">
@@ -91,8 +112,24 @@ const Overview = ({ orders, customer }: OverviewProps) => {
                   </span>
                 </div>
               </div>
+            </div> */}
+            <div>
+            <div className="flex flex-col gap-y-4">
+                <h3 className="text-large-semi">Points</h3>
+                <div className="flex items-end gap-x-2">
+                  <span className="text-3xl-semi leading-none">
+                    {formatAmount({
+                      amount: giftCardTotal,
+                      region: giftCardRegion,
+                      includeTaxes: false
+                    })}
+                  </span>
+                </div>
+              </div>
             </div>
-
+            <div>
+              
+            </div>
             <div className="flex flex-col gap-y-4">
               <div className="flex items-center gap-x-2">
                 <h3 className="text-large-semi">Recent orders</h3>

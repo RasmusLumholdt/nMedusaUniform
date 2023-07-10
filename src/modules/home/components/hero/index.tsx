@@ -1,21 +1,42 @@
 import UnderlineLink from "@modules/common/components/underline-link"
 import Image from "next/image"
+import { registerUniformComponent } from "@uniformdev/canvas-react";
 
-const Hero = () => {
+
+type HeroPropType = {
+  titleA?: string
+  subTitle?: string
+  underlink?: Link
+  underlinkText?: string
+  image?: string
+}
+
+type Link = {
+  path: string,
+  type: string
+}
+
+const Hero = ({
+  titleA,
+  subTitle,
+  underlink,
+  underlinkText,
+  image,
+} : HeroPropType) => {
   return (
-    <div className="h-[90vh] w-full relative">
+    <div className="h-[70vh] w-full relative overflow-hidden">
       <div className="text-white absolute inset-0 z-10 flex flex-col justify-center items-center text-center small:text-left small:justify-end small:items-start small:p-32">
-        <h1 className="text-2xl-semi mb-4 drop-shadow-md shadow-black">
-          Summer styles are finally here
+        <h1 className="text-2xl-thin mb-4 drop-shadow-md shadow-black">
+          {titleA}
         </h1>
-        <p className="text-base-regular max-w-[32rem] mb-6 drop-shadow-md shadow-black">
-          This year, our new summer collection will shelter you from the harsh
-          elements of a world that doesn&apos;t care if you live or die.
+        <p className="text-xl-regular max-w-[32rem] mb-6 drop-shadow-md shadow-black">
+          {subTitle}
         </p>
-        <UnderlineLink href="/store">Explore products</UnderlineLink>
+        {underlink &&
+        <UnderlineLink href={underlink.path}>{underlinkText}</UnderlineLink>}
       </div>
-      <Image
-        src="/hero.jpg"
+      {image && <Image
+        src={image}
         layout="fill"
         loading="eager"
         priority={true}
@@ -24,9 +45,9 @@ const Hero = () => {
         alt="Photo by @thevoncomplex https://unsplash.com/@thevoncomplex"
         className="absolute inset-0"
         draggable="false"
-      />
+      />}
     </div>
   )
 }
-
 export default Hero
+registerUniformComponent({ type: "hero", component: Hero });
